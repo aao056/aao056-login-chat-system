@@ -17,7 +17,6 @@ async function getUserByEmail(emailToSearch){
     const result = await users.findOne({
         email: emailToSearch
     },{
-        username : 1, _id: 0
     })
     
     if(result===null) return null;
@@ -53,8 +52,19 @@ async function getUsernameById(_idToSearch){
     return (result.toJSON()['username']).toString()
 }
 
+async function findIdByUsername(usernameToSearch){
+    const result = await users.findOne({
+        username : usernameToSearch
+    },{})
+
+    if (result === null) return null;
+
+    return (result.toJSON()['_id']).toString()
+}
+
 module.exports = {getUserByEmail,
                  registerNewUser,
                  getPasswordByEmail,
                  usernameAlreadyExists,
-                 getUsernameById};
+                 getUsernameById,
+                 findIdByUsername};

@@ -1,12 +1,11 @@
 const http = require('http')
 const app = require('./app')
-const {getUserByEmail,getPasswordByEmail} = require('./models/users.model')
 
 const {connect,disconnect} = require('./services/database.conn')
 
 const PORT = 8080;
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 
 async function startServer(){
@@ -14,6 +13,7 @@ async function startServer(){
     server.listen(PORT, ()=>{
         console.log(`Server is running on port ${PORT}...`)
     })
+ 
 }
 
 startServer()
