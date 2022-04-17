@@ -21,7 +21,7 @@ async function getUserByEmail(emailToSearch){
     
     if(result===null) return null;
 
-    return result.toJSON()
+    return (result.toJSON()['username']).toString()
 }
 
 async function getPasswordByEmail(emailToSearch){
@@ -45,9 +45,7 @@ async function usernameAlreadyExists(usernameToSearch){
 }
 
 async function getUsernameById(_idToSearch){
-    const result = await users.findOne({
-        _id: _idToSearch
-    },{})
+    const result = await users.findById(_idToSearch)
 
     return (result.toJSON()['username']).toString()
 }
@@ -58,8 +56,7 @@ async function findIdByUsername(usernameToSearch){
     },{})
 
     if (result === null) return null;
-
-    return (result.toJSON()['_id']).toString()
+    return (result.toJSON()['_id']).toString();
 }
 
 module.exports = {getUserByEmail,

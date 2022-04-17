@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
+const path = require('path')
 
 const MongoStore = require('connect-mongo');
 
@@ -38,9 +39,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static(path.join(__dirname,'views','chat_files')))
+
 app.get('/', checkAuthenticated , async (req,res) => {
     const username = await getUsernameById(req.user)
-    res.render('index.ejs', {name: username})
+    res.render(path.join(__dirname,'views','chat_files','index.ejs'), 
+    {name: username})
 })
 
 
@@ -51,7 +55,7 @@ app.get('/login', checkNotAuthenticated , (req,res) => {
 app.post('/login', checkNotAuthenticated , passport.authenticate('local',{
     successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true
+    failureFlash: true,
 }))
 
 app.get('/register', checkNotAuthenticated , (req,res) => {
@@ -65,16 +69,16 @@ app.post('/register', checkNotAuthenticated , async (req,res) => {
           await usernameAlreadyExists(req.body.username)){
            res.status(400).send(`It seems you already
                                  have an account with this email or this username.
-                                 Try <a href="/login">login</a> instead`)
+                                 Try <a href="/login">login</a> instead`);
        }
-       await registerNewUser(req.body.username,req.body.email,hashedPassword);
-
-       res.status(200).send(`Account succesfully created
-                             You can use your credentials to 
-                             <a href="/login">login</a>`)
-
+       else{
+            await registerNewUser(req.body.username,req.body.email,hashedPassword);
+            res.status(200).send(`Account succesfully created
+                                  You can use your credentials to 
+                                  <a href="/login">login</a>`)
+       }
     } catch {
-        res.status(500).send('Something went wrong on our end..')
+         res.status(500).send('Something went wrong.. Please try again')
     }
 
 })
@@ -83,6 +87,8 @@ app.post('/logout' ,(req,res) => {
     req.logOut();
     res.redirect('/login')
 })
+
+
 
 function checkAuthenticated(req,res,next){
     if(req.isAuthenticated()){

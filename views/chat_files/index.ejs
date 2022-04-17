@@ -6,7 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Secret Chat</title>
   <script defer src="http://localhost:8080/socket.io/socket.io.js"></script>
-  <script defer src="script.js"></script>
+  <script defer>
+    const name = '<%-name%>'
+  </script>
+  <script defer src='script.js'></script>
   <style>
     body {
       padding: 0;
@@ -51,4 +54,7 @@
     <button type="submit" id="send-button">Send</button>
   </form>
 </body>
+<form action="/logout" method="POST">
+  <button type ='submit'>Log Out</button>
+</form>
 </html>
