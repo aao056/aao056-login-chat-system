@@ -10,8 +10,8 @@ socket.emit('user-connected',name)
 socket.on('new-user',name => {
     addMessage(`${name} has entered the chat`)
 })
-socket.on('chat-message', (name,message) => {
-    addMessage(`${name}: ${message}`)
+socket.on('chat-message', response  => {
+    addMessage(`${response.name}: ${response.message}`)
   })
 
 socket.on('disconnected-user',name =>{
