@@ -12,3 +12,11 @@ npm start
 ```
 
 In order to test the group chat functionality you should either go to localhost on an incognito tab (CTRL + SHIFT + N) or tell your friend/colleague from the same network to go to http://YOUR_NETWORK_IP_HERE from his computer and have a chat with him :) I know this can be too much if you want to test if for 5-6 ore more users , this is why I will add a new branch for testing.
+
+
+In order to be able to run the project create an .env file with 2 lines
+
+```
+MONGO_URL={YOUR MONGO URL}
+SESSION_SECRET={ANY STRING YOU WISH}
+```
